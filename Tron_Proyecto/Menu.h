@@ -11,14 +11,13 @@ public:
 	void SelecUp();
 	void SelecDown();
 
-	sf::Texture mTexture;
-	sf::Sprite mArrow;
-	sf::RenderWindow mWindow;
+	sf::RenderWindow WindowMenu;
 
-	bool Index = true;
+	unsigned int Index = 0;
 	sf::Font font;
 	sf::Text Title;
-	sf::Text Start;
+	sf::Text Start_L;
+	sf::Text Start_O;
 	sf::Text Exit;
 
 };

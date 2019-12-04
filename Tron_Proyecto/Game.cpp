@@ -259,7 +259,7 @@ void Game::GameOver()
 
 	sf::Font fuente;
 	// Intentamos cargarla
-	if (!fuente.loadFromFile("data/OpenSans.ttf"))
+	if (!fuente.loadFromFile("Font/Real Brush.otf"))
 	{
 		//
 	}
@@ -275,6 +275,7 @@ void Game::GameOver()
 		mWindow.close();
 		Frase = "Jugador 2 Gano";
 		texto.setString(Frase);
+		texto.setFont(fuente);
 		texto.setPosition(50, 50);
 		texto.setCharacterSize(30);
 
@@ -291,6 +292,18 @@ void Game::GameOver()
 	else if (Player2.mSpeed == 0)
 	{
 		mWindow.close();
+		Frase = "Jugador 1 Gano";
+		texto.setString(Frase);
+		texto.setFont(fuente);
+		texto.setPosition(50, 50);
+		texto.setCharacterSize(30);
+
+		while (window.isOpen())
+		{
+			window.clear();
+			window.draw(texto);
+			window.display();
+		};
 	}
 }
 
