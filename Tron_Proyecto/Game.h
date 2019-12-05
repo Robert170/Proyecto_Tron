@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
+#include <iostream>
 #include "jugador.h"
 class Game
 {
@@ -8,16 +10,19 @@ public:
 	Game();
 	~Game();
 	void run();
+
 private:
 	void processEvents();
 	void update(sf::Time deltaTime);
 	void render();
 	void handlePlayerInput(sf::Keyboard::Key key);
 	void GameOver();
+
 private:
 
 	int GameWith = 800;
 	int GameHeigth = 700;
+	std::string Decision;
 
 	bool GameZone[800][700] = { false };
 
