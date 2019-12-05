@@ -17,12 +17,17 @@ private:
 	void render();
 	void handlePlayerInput(sf::Keyboard::Key key);
 	void GameOver();
+	void IsColi(sf::RectangleShape P, jugador PP);
 
 private:
 
 	int GameWith = 800;
 	int GameHeigth = 700;
 	std::string Decision;
+	int Px1;
+	int Py1;
+	int Px2;
+	int Py2;
 
 	bool GameZone[800][700] = { false };
 

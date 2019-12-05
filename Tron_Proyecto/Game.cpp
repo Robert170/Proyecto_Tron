@@ -23,7 +23,6 @@ void Game::run()
 	sf::IpAddress IP=IP.getLocalAddress();
 	sf::TcpSocket P1;
 	sf::TcpSocket P2;
-
 	P1.setBlocking(false);
 	P2.setBlocking(false);
 
@@ -33,7 +32,6 @@ void Game::run()
 	{
 		Decision[i] = tolower(Decision[i]);
 	}
-
 
 	if (Decision == "host")
 	{
@@ -64,16 +62,9 @@ void Game::run()
 		{
 			sf::Packet Pac1;
 			sf::Packet Pac2;
-			timeSinceLastUpdate -= TimePerFrame;
-			processEvents();
-			update(TimePerFrame);
+			
 			if (Decision == "player")
-			{/*
-				if (PrePosition1 != Player1.P1.getPosition())
-				{
-					Pac1 << Player1.P1.getPosition().x << Player1.P1.getPosition().y;
-					P1.send(Pac1);
-				}*/
+			{
 				if (PrePosition2 != Player2.P2.getPosition())
 				{
 					Pac2 << Player2.P2.getPosition().x << Player2.P2.getPosition().y;
@@ -90,12 +81,6 @@ void Game::run()
 			
 			if (Decision == "host")
 			{
-				/*if (PrePosition2 != Player2.P2.getPosition())
-				{
-					Pac2 << Player2.P2.getPosition().x << Player2.P2.getPosition().y;
-					P2.send(Pac2);
-				}*/
-
 				if (PrePosition1 != Player1.P1.getPosition())
 				{
 					Pac1 << Player1.P1.getPosition().x << Player1.P1.getPosition().y;
@@ -109,9 +94,12 @@ void Game::run()
 				}
 				PrePosition2 = Player2.P2.getPosition();
 			}
+
+			timeSinceLastUpdate -= TimePerFrame;
+			processEvents();
+			update(TimePerFrame);
 		}
 		render();
-
 	}
 }
 
@@ -139,32 +127,32 @@ void Game::update(sf::Time deltaTime)//falta arreglar coliciones
 	{
 		GameOver();
 	}
+	IsColi(Player1.P1,Player1);
+	IsColi(Player2.P2,Player2);
+	//Px1 = Player1.P1.getPosition().x-1;
+	//Py1 = Player1.P1.getPosition().y-1;
 
-	//int Px1 = Player1.P1.getPosition().x-1;
-	//int Py1 = Player1.P1.getPosition().y-1;
-
-	//int Px2 = Player2.P2.getPosition().x-1;
-	//int Py2 = Player2.P2.getPosition().y-1;
+	//Px2 = Player2.P2.getPosition().x-1;
+	//Py2 = Player2.P2.getPosition().y-1;
 
 	////colisiones player 1 
-	//	if (!GameZone[Px1][Py1])
-	//	{
-	//		GameZone[Px1][Py1] = true;
-	//	}
-	//	else
+	//	if (GameZone[Px1][Py1])
 	//	{
 	//		Player1.mSpeed = 0;
 	//	}
-	//
-
-	////colisiones player 2 
-	//	if (!GameZone[Px2][Py2])
+	//	else
 	//	{
-	//		GameZone[Px2][Py2] = true;
+	//		GameZone[Px1][Py1] = true;
+	//	}
+	//
+	////colisiones player 2 
+	//	if (GameZone[Px2][Py2])
+	//	{
+	//		Player2.mSpeed = 0;
 	//	}
 	//	else
 	//	{
-	//		Player2.mSpeed = 0;
+	//		GameZone[Px2][Py2] = true;
 	//	}
 
 
@@ -348,7 +336,9 @@ void Game::GameOver()
 	sf::RenderWindow window(sf::VideoMode(300, 300), "Game Over");
 
 	sf::Font fuente;
+
 	// Intentamos cargarla
+	
 	if (!fuente.loadFromFile("Font/Real Brush.otf"))
 	{
 		//
@@ -359,6 +349,7 @@ void Game::GameOver()
 	// Creamos un objeto String
 	sf::String Frase;
 	
+
 	if (Player1.mSpeed == 0)
 	{
 		mWindow.close();
@@ -391,6 +382,22 @@ void Game::GameOver()
 			window.draw(texto);
 			window.display();
 		};
+	}
+}
+
+void Game::IsColi(sf::RectangleShape P, jugador PP)
+{
+	Px1 = P.getPosition().x;
+	Py1 = P.getPosition().y;
+
+	 if (GameZone[Px1][Py1])
+	{
+		PP.mSpeed = 0;
+	
+	}
+	else
+	{
+		GameZone[Px1][Py1] = true;
 	}
 }
 
